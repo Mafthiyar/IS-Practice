@@ -1,0 +1,37 @@
+import java.util.*;
+
+class solution{
+    public static boolean isAna(String a1, String b1){
+        if(a1.length() != b1.length()){
+            return false;
+        }
+
+        char[] a2 = a1.toCharArray();
+        char[] b2 = b1.toCharArray();
+
+        Arrays.sort(a2);
+        Arrays.sort(b2);
+
+        boolean c = Arrays.equals(a2,b2);
+
+        if(c){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String a = sc.nextLine();
+        String b = sc.nextLine();
+
+        String a1 = a.toLowerCase();
+        String b1 = b.toLowerCase();
+
+        boolean x = (isAna(a1,b1));
+
+        System.out.println(x);
+
+    }
+}
