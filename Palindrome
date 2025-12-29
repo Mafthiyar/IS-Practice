@@ -1,0 +1,23 @@
+1import java.util.*;
+2class Solution {
+3    public static boolean isPalindrome(int x) {
+4        if(x < 0){
+5            return false;
+6        }
+7        int rev = 0;
+8        int temp = x;
+9
+10        while(temp > 0){
+11            int rem = temp % 10;
+12            rev = rev * 10 + rem;
+13            temp = temp/10;
+14        }
+15        return rev == x;
+16    }
+17    public static void main(String[] args){
+18        Scanner sc = new Scanner(System.in);
+19        int x = sc.nextInt();
+20
+21        isPalindrome(x);
+22    }
+23}
