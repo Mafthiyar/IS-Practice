@@ -1,0 +1,35 @@
+import java.util.*;
+
+class solution{
+
+    public static boolean isValid(String s){
+        Stack<Character> st = new Stack<>();
+
+        for(char c : s.toCharArray()) {
+            if ((c == '{') || (c == '[') || (c == '(')) {
+                st.push(c);
+            } else {
+
+                if (st.isEmpty()) {
+                    System.out.println("invalid");
+                    return false;
+                }
+
+                char top = st.pop();
+                if ((c == ')' && top != '(') || (c == '}' && top != '{') || (c == '[' && top != ']')) {
+                    return false;
+                }
+            }
+        }
+        return st.isEmpty();
+    }
+    public static void main(String[] args){
+        String s = "{[()]}";
+
+        if(isValid(s)){
+            System.out.println("yes valid balenced :" + s);
+        }else{
+            System.out.println("not valid");
+        }
+    }
+}
