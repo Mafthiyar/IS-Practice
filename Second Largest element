@@ -1,0 +1,11 @@
+import java.util.*;
+
+class solution {
+    public static void main(String[] args) {
+      int arr[] = {7,4,2,9,20,4};
+      int n = arr.length;
+      Arrays.sort(arr);
+
+        System.out.println(arr[n-2]);
+    }
+}
