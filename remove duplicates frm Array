@@ -1,0 +1,14 @@
+import java.util.*;
+
+class solution{
+    public static void main(String[] args){
+     int arr[] = {1,1,1,2,2,2,3};
+
+     HashSet<Integer> h = new HashSet<>();
+
+     for(int a : arr){
+         h.add(a);
+     }
+        System.out.println(h);
+    }
+}
