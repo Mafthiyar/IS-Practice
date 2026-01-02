@@ -1,0 +1,15 @@
+class missingNumber{
+    public static void main (String[] args){
+        int[] arr = {1,2,3,4};
+        int n = arr.length+1;
+        int sum = 0;
+
+        int g = n * (n+1)/2;
+
+        for(int h : arr){
+            sum += h;
+        }
+
+        System.out.println(g-sum);
+    }
+}
