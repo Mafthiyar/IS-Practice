@@ -1,0 +1,25 @@
+import java.util.*;
+class Solution {
+    public int maxProduct(int n) {
+        int product = 0;
+
+        while(n > 10){
+            int sum = 1;
+        
+        while(n > 0){
+           sum = sum * (n % 10);
+           n /= 10; 
+        }
+        product =  sum;
+        }
+        return product;
+        
+    }
+    public static void mainO(String[] args){
+        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution();
+        int n = sc.nextInt();
+
+        s.maxProduct(n);
+    }
+}
