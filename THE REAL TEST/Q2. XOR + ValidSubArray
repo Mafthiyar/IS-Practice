@@ -1,0 +1,296 @@
+✅ QUESTION 2 — XOR + Valid Subarray (ArrayList)
+🔹 Problem
+
+Given an ArrayList of integers and min_len = 2:
+
+A subarray is valid if:
+
+Length ≥ min_len
+
+XOR of first two elements has exactly one set bit
+
+Find the maximum sum of such subarrays.
+
+🔹 Input
+[5, 1, 4, 5, 1, 4]
+
+🧠 Logic
+
+Only check subarrays of size 2
+
+XOR has one bit → (x & (x - 1)) == 0
+
+Track max sum
+
+✅ Java Code
+import java.util.*;
+
+public class XORSubarray {
+    static boolean isSingleBit(int x) {
+        return x > 0 && (x & (x - 1)) == 0;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(5);
+        arr.add(1);
+        arr.add(4);
+        arr.add(5);
+        arr.add(1);
+        arr.add(4);
+
+        int maxSum = 0;
+
+        for (int i = 0; i < arr.size() - 1; i++) {     // for first subArray needed here arr.length()-minlength //  minlength = 2
+            int a = arr.get(i);
+            int b = arr.get(i + 1);
+
+            int xor = a ^ b;
+            if (isSingleBit(xor)) {
+                int sum = a + b;
+                maxSum = Math.max(maxSum, sum);  // if needed first subArray then should use break here 
+            }
+        }
+
+        System.out.println(maxSum);
+    }
+}
+
+✅ Output
+6
+
+....................................................................................................................................................................................................
+...................................................................................................................................................................................................
+
+Great question bro 👌 — this is the **exact line** that confuses many people:
+
+```java
+x > 0 && (x & (x - 1)) == 0
+```
+
+I’ll explain it **slowly, visually, and clearly**.
+No skipping steps.
+
+---
+
+# 🎯 What this condition checks
+
+It checks **one simple thing**:
+
+> “Does the number `x` have **only ONE ‘1’ bit** in binary?”
+
+Numbers like:
+
+```
+1  → 0001
+2  → 0010
+4  → 0100
+8  → 1000
+```
+
+These are called **powers of 2**.
+They have **exactly one 1** in binary.
+
+---
+
+# 🔑 Why we need this
+
+In your program:
+
+* You calculate `xor`
+* Then you check if `xor` has **only one set bit**
+* That means it is **valid**
+
+---
+
+# 🧩 Now let’s break this line
+
+```java
+x > 0 && (x & (x - 1)) == 0
+```
+
+It has **two parts**:
+
+1️⃣ `x > 0`
+2️⃣ `(x & (x - 1)) == 0`
+
+Both must be **true**.
+
+---
+
+# PART 1 — `x > 0`
+
+This just means:
+
+> Ignore 0 and negative numbers.
+
+Because:
+
+* 0 in binary is `0000`
+* It has **no 1 bits**
+* We don’t want that.
+
+So:
+
+```java
+x must be positive
+```
+
+---
+
+# PART 2 — `(x & (x - 1)) == 0`
+
+This is the **real magic** 🪄
+Let’s understand with **binary pictures**.
+
+---
+
+## Case 1️⃣ : x = 4
+
+### Step 1 — write in binary
+
+```
+x = 4  →  100
+```
+
+### Step 2 — subtract 1
+
+```
+x - 1 = 3  →  011
+```
+
+### Step 3 — AND operation
+
+```
+   100   (4)
+&  011   (3)
+-------
+   000
+```
+
+### Result
+
+```
+(x & (x - 1)) = 0
+```
+
+✅ That means **x had only ONE ‘1’ bit**
+So 4 is valid.
+
+---
+
+## Case 2️⃣ : x = 5
+
+### Step 1 — write in binary
+
+```
+x = 5  →  101
+```
+
+### Step 2 — subtract 1
+
+```
+x - 1 = 4  →  100
+```
+
+### Step 3 — AND operation
+
+```
+   101   (5)
+&  100   (4)
+-------
+   100
+```
+
+### Result
+
+```
+(x & (x - 1)) = 4  ≠ 0
+```
+
+❌ That means **x had MORE than one ‘1’ bit**
+So 5 is NOT valid.
+
+---
+
+# 🔍 Why does this trick work?
+
+Look at this pattern:
+
+### If a number has **only one 1 bit**
+
+Example: `1000`
+
+* Subtracting 1 → `0111`
+* ANDing them → always `0000`
+
+---
+
+### If a number has **more than one 1 bit**
+
+Example: `1010`
+
+* Subtracting 1 → `1001`
+* ANDing them → will keep at least one `1`
+
+So result ≠ 0.
+
+---
+
+# 🧠 Visual Summary
+
+| x | Binary of x | x-1 | Binary of x-1 | x & (x-1) | Valid? |
+| - | ----------- | --- | ------------- | --------- | ------ |
+| 1 | 0001        | 0   | 0000          | 0000      | ✅      |
+| 2 | 0010        | 1   | 0001          | 0000      | ✅      |
+| 4 | 0100        | 3   | 0011          | 0000      | ✅      |
+| 5 | 0101        | 4   | 0100          | 0100      | ❌      |
+| 6 | 0110        | 5   | 0101          | 0100      | ❌      |
+| 8 | 1000        | 7   | 0111          | 0000      | ✅      |
+
+---
+
+# 🧩 Now connect to your code
+
+When you write:
+
+```java
+if (x > 0 && (x & (x - 1)) == 0)
+```
+
+You are saying:
+
+> “Check if `x` is a **power of 2** (has exactly one 1-bit).”
+
+That’s it. Nothing more complicated.
+
+---
+
+# 🔥 One-line memory trick
+
+Remember this line forever:
+
+> **Power of 2 trick:**
+> `x & (x - 1) == 0`
+
+---
+
+# 🏁 Final clarity
+
+So when you saw:
+
+```
+4 & 3 = 100 & 011 = 000  ✔
+5 & 4 = 101 & 100 = 100  ❌
+```
+
+It simply means:
+
+* 4 has **one 1-bit** → valid
+* 5 has **two 1-bits** → not valid
+
+
+
+
+
+
