@@ -1,0 +1,72 @@
+✅ QUESTION 1 — Flow / Synchronization (ArrayList)
+🔹 Problem (Simplified, Exam Style)
+
+You are given:
+
+N intersections
+
+initial_flow as an ArrayList
+
+A range [L, R]
+
+sync_threshold
+
+Rules:
+
+If all values in [L, R] ≥ sync_threshold, system is synchronized.
+
+Effective flow per step = flow[L] * flow[R]
+
+You can pick all intersections once and add the same effective flow.
+
+Find total effective flow.
+
+🔹 Input
+N = 3
+initial_flow = [5, 5, 5]
+L = 0, R = 2
+sync_threshold = 0
+
+🧠 Logic
+
+Check synchronization
+
+Compute effective flow once
+
+Add it N times
+
+✅ Java Code (ArrayList)
+import java.util.*;
+
+public class FlowSynchronization {
+    public static void main(String[] args) {
+        ArrayList<Integer> flow = new ArrayList<>();
+        flow.add(5);
+        flow.add(5);
+        flow.add(5);
+
+        int L = 0, R = 2;
+        int syncThreshold = 0;
+
+        boolean synchronizedFlow = true;
+        for (int i = L; i <= R; i++) {
+            if (flow.get(i) < syncThreshold) {
+                synchronizedFlow = false;
+                break;
+            }
+        }
+
+        int total = 0;
+        if (synchronizedFlow) {
+            int effective = flow.get(L) * flow.get(R);
+            for (int i = 0; i < flow.size(); i++) {
+                total += effective;
+            }
+        }
+
+        System.out.println(total);
+    }
+}
+
+✅ Output
+75
